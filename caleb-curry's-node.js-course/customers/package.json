@@ -1,0 +1,19 @@
+{
+  "name": "customers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/eyob-h/Node.js-practice.git"
+  },
+  "author": "eyob",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eyob-h/Node.js-practice/issues"
+  },
+  "homepage": "https://github.com/eyob-h/Node.js-practice#readme"
+}
