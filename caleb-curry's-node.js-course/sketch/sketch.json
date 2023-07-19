@@ -1,0 +1,21 @@
+{
+	"name": "Eyoba",
+	"age": "23",
+
+	"interests": [
+		"basketball", "drawing", "astronomy"
+	],
+	"fav numbers": [
+		3, 6, 12
+	],
+
+	"family": [{
+			"name": "Mulu",
+			"r/ship": "Mom"
+		},
+		{
+			"name": "Emaye",
+			"r/ship": "Grandma"
+		}
+	]
+}
