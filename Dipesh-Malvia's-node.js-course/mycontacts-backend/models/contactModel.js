@@ -6,7 +6,7 @@ const contactSchema = mongoose.Schema({
         required: [true, "Please Enter Your Name."]
     },
     age:{
-        type:Number,
+        type:String,
         required:[true,"Please Enter Your Age"]
     },
     phone:{
@@ -19,7 +19,7 @@ const contactSchema = mongoose.Schema({
     },
 },  
     {
-        timestamp:true,
+        timestamps:true,
     }
     
 
