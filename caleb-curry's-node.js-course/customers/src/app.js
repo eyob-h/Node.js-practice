@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT||3000;
 //mongodb
 const mongoose = require('mongoose');
 mongoose.set('strictQuery',false);
@@ -9,6 +9,10 @@ mongoose.set('strictQuery',false);
 //get values from api request
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+//env
+const dotenv = require("dotenv");
+dotenv.config();
 
 const JSONA = {
 	"name": "Eyoba",
