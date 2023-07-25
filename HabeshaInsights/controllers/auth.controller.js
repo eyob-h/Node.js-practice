@@ -69,13 +69,13 @@ exports.login=async (req,res)=>{
 
 			if(bcrypt.compareSync(req.body.password, userData.password)){
 
-				let jwt_secret=process.env.JWT_SECRET||'mysecret';
+				let jwt_secret = process.env.JWT_SECRET||'sekuarDinich0911';
 				let token=jwt.sign({
 				  data: userData
-				}, jwt_secret, { expiresIn: '12h' });
+				}, jwt_secret, { expiresIn: '10h' });
 
 				return res.status(200).send({
-					message:'Login successfull',
+					message:'Login Successful',
 					data:userData,
 					token:token
 				});
