@@ -22,7 +22,7 @@ exports.auth=(req,res,next)=>{
 	    })
 	}else{
 		// invalid token - synchronous
-		let jwt_secret=process.env.JWT_SECRET||'mysecret';
+		let jwt_secret=process.env.JWT_SECRET||'sekuarDinich0911';
 		try {
 		  var decoded = jwt.verify(token, jwt_secret);
 		  if(decoded){
@@ -39,7 +39,7 @@ exports.auth=(req,res,next)=>{
 	            message:"Session expired."
 	          })
 	        }else{
-	          return res.status(401).send({
+	           return res.status(401).send({
 	           message:"Please login to continue."
 	          })
 	        }
