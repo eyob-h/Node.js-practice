@@ -4,12 +4,23 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const http = require('http');
 
+//
+const userRoute = require("./routes/users");
+app.use("/api/users", userRoute);
+
+
+//
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false,limit :'350mb' }));
 // parse application/json
 app.use(bodyParser.json());
 
 require('dotenv').config();
+
+//file upload
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
 
 app.use(cors());
 global.publicPath=__dirname+'/public'; //path to the public folder
@@ -35,6 +46,12 @@ const PORT = process.env.PORT || 6001;
 //   })
 //   .catch((error) => console.log(`${error} did not connect`));
 
+//image
+app.use(function(req, res, next){
+	global.req=req;
+	next();
+});
+app.use(express.static(__dirname + '/public')); //image path
 
 
 mongoose.connect(process.env.CONNECTION_STRING, {
@@ -54,6 +71,8 @@ require('./routes/server')(app);
 // const http=require('http');
 require('./routes/server');
 const server=http.Server(app);
+// const app = require('../../app');
+// const http = require('http').createServer(app).listen(3001);
 // const port=process.env.PORT||3000;
 server.listen(PORT,()=>{
 	console.log(`server is running on port localhost:${PORT}`);

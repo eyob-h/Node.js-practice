@@ -1,18 +1,27 @@
 const mongoose=require('mongoose');
 const bcrypt=require('bcrypt');
+
 const schema = new mongoose.Schema({
-    first_name: { type:String, default : '' },
+    first_name: { type:String, default : '' }, //username 
     last_name: { type:String, default : '' },
     email: String,
     password: String,
-    //  profile_image: { type:String, default : '' },
-     occupation: { type:String, default : '' },
+    profile_image: { type:String, default : '' }, //profilePicture
+    occupation: { type:String, default : '' },
     address: { type:String, default : '' },
    
-    followers:{type: Array,
-        default: [],},
-    following:{type: Array,
-        default: [],}
+    followers: {
+        type: Array,
+        default: [],
+      },
+    followings: {
+    type: Array,
+    default: [],
+    },
+    is_business_owner: {
+    type: Boolean,
+    default: false,
+    }
     },{
         timestamps:true
 });

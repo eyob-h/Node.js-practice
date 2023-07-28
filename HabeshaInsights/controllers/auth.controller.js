@@ -3,8 +3,9 @@ const { Validator } = require('node-input-validator');
 const user=require('./../models/user.model');
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
-exports.register=async (req,res)=>{
 
+
+exports.register=async (req,res)=>{
 	const v = new Validator(req.body, {
 		first_name:'required|minLength:2|maxLength:100',
 		last_name:'required|minLength:2|maxLength:100',
