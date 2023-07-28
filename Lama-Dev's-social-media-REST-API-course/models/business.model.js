@@ -11,17 +11,17 @@ const BusinessSchema = new Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-      max: 50,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      min: 6,
-    },
+    // email: {
+    //   type: String,
+    //   required: true,
+    //   max: 50,
+    //   unique: true,
+    // },
+    // // password: {
+    // //   type: String,
+    // //   required: true,
+    // //   min: 6,
+    // // },
     description: {
       type: String,
       required: true,

@@ -13,7 +13,7 @@ export const createBusiness = async (req, res, next) => {
     userId: req.userId,
     ...req.body,
   });
-
+  
   try {
     const savedBusiness = await newBusiness.save();
     res.status(201).json(savedBusiness);
@@ -21,6 +21,52 @@ export const createBusiness = async (req, res, next) => {
     next(err);
   }
 };
+//update business
+export const updateBusiness = async(req, res, next)=>{
+  // const biz = await Business.findById(req.params.id);
+  const business = await Business.findById(req.params.id);
+ 
+    if (business.userId !== req.userId){
+        return next(createError(403, "Come on man, you can't update somebody else's profile."));
+    }
+    if(req.body.password){
+        //fix the update password issue
+        try{
+            // const salt = await bcrypt.genSalt(10);
+            
+            const hash = await bcrypt.hashSync(req.body.password, 5);
+            req.body.password = hash;
+            console.log(hash)
+            console.log("Mango")
+            console.log(req.body.password)
+            console.log("Mango")
+
+            const new_password = bcrypt.hashSync(req.body.password, 5);
+            const newUser = new User({
+            ...req.body,
+            password: hash,
+            });
+            req.body.password = new_password;   
+            
+            
+        } catch (err) {
+            
+            console.log(req.body.password)
+            return next(createError(403, "Password error!"));
+          }
+    }
+    try{
+        const business = await Business.findByIdAndUpdate(req.params.id, {
+            $set: req.body,
+        });
+        res.status(200).json("Account has been updated");
+        } catch (err) {
+        //  return res.status(500).json(err);
+         return next(createError(500, "Account NOT UPDATED"));
+        }
+      }
+
+
 
 //delete business
 export const deleteBusiness = async (req, res, next) => {
