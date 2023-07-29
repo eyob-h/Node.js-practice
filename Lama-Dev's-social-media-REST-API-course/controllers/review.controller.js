@@ -68,3 +68,19 @@ export const deleteReview = async (req, res, next) => {
 
 
 //UPDATE OUR REVIEW
+//UPDATE PROFILE
+export const updateReview = async(req, res, next)=>{
+  const review = await Review.findById(req.params.id);
+  if (req.userId !== review.userId) {
+    return next(createError(403, "Come on man, you can't update somebody else's review."));
+  }
+  try{
+      const review = await Review.findByIdAndUpdate(req.params.id, {
+          $set: req.body,
+      });
+      res.status(200).json("Your review has been updated");
+      } catch (err) {
+      //  return res.status(500).json(err);
+       return next(createError(500, "YOUR REVIEW IS NOT UPDATED"));
+      }
+}
