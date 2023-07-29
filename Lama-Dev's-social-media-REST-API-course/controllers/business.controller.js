@@ -3,45 +3,48 @@ import createError from "../utils/createError.js";
 
 //create business
 export const createBusiness = async (req, res, next) => {
-  //check for duplicate
     console.log(req.isBusinessOwner)
-    if (req.isBusinessOwner=="false")
-    // console.log(req.params.isBusinessOwner)
-    // console.log(req.params.username)
-    return next(createError(403, "Only business owners can create a business!"));
+    if (!req.isBusinessOwner){
 
-  const newBusiness = new Business({
-    userId: req.userId,
+      return next(createError(403, "Only business owners can create a business!"));
+    }
+
+      // console.log(req.params.isBusinessOwner)
+      // console.log(req.params.username)
+      
+      const newBusiness = new Business({
+        userId: req.userId,
     ...req.body,
   });
-  
-  try {
-    const savedBusiness = await newBusiness.save();
-    res.status(201).json(savedBusiness);
-  } catch (err) {
-    next(err);
-  }
-};
+    
+    try {
+      const savedBusiness = await newBusiness.save();
+      res.status(201).json(savedBusiness);
+    } catch (err) {
+      next(err);
+    }
+}
+;
 //update business
 export const updateBusiness = async(req, res, next)=>{
   // const biz = await Business.findById(req.params.id);
   const business = await Business.findById(req.params.id);
- 
-    if (business.userId !== req.userId){
-        return next(createError(403, "Come on man, you can't update somebody else's profile."));
-    }
-    if(req.body.password){
+  
+  if (business.userId !== req.userId){
+    return next(createError(403, "Come on man, you can't update somebody else's profile."));
+  }
+  if(req.body.password){
         //fix the update password issue
         try{
-            // const salt = await bcrypt.genSalt(10);
-            
-            const hash = await bcrypt.hashSync(req.body.password, 5);
-            req.body.password = hash;
-            console.log(hash)
-            console.log("Mango")
-            console.log(req.body.password)
-            console.log("Mango")
-
+          // const salt = await bcrypt.genSalt(10);
+          
+          const hash = await bcrypt.hashSync(req.body.password, 5);
+          req.body.password = hash;
+          console.log(hash)
+          console.log("Mango")
+          console.log(req.body.password)
+          console.log("Mango")
+          
             const new_password = bcrypt.hashSync(req.body.password, 5);
             const newUser = new User({
             ...req.body,

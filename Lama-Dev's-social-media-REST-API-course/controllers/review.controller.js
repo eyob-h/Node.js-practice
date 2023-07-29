@@ -25,16 +25,37 @@ export const createReview = async (req, res, next) => {
         createError(403, "You have already created a review for this business!")
       );
 
+    // Increase the totalStars and starNumber fields by the number of stars passed in the body
+    const business = await Business.findByIdAndUpdate(
+      req.body.businessId,
+      {
+        $inc: {
+          totalStars: req.body.star,
+          starNumber: 1,
+        },
+      },
+      { new: true }
+    );
+
+    // Calculate the new average rating
+    const averageRating = round(business.totalStars / business.starNumber,1)
+
+
+
+    // Set the average rating field
+    business.averageRating = averageRating;
+
+    // Save the business
+    await business.save();
+
     const savedReview = await newReview.save();
 
-    await Business.findByIdAndUpdate(req.body.businessId, {
-      $inc: { totalStars: req.body.star, starNumber: 1 },
-    });
     res.status(201).send(savedReview);
   } catch (err) {
     next(err);
   }
 };
+
 
 export const getReviews = async (req, res, next) => {
   try {
@@ -62,13 +83,20 @@ export const deleteReview = async (req, res, next) => {
         if (req.userId !== review.userId) {
             return next(createError(403, "You can delete only your own reviews!"));
         }
+
+        // Update the totalStars and starNumber fields
+        const business = await Business.findById(review.businessId);
+        business.totalStars -= review.star;
+        business.starNumber -= 1;
+        business.averageRating = business.totalStars / business.starNumber;
+        await business.save();
         await Review.findByIdAndDelete(req.params.id);
         res.status(200).send("Review Deleted.");
         };
 
 
 //UPDATE OUR REVIEW
-//UPDATE PROFILE
+
 export const updateReview = async(req, res, next)=>{
   const review = await Review.findById(req.params.id);
   if (req.userId !== review.userId) {
