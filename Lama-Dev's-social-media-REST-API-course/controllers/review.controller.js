@@ -1,6 +1,7 @@
 import createError from "../utils/createError.js";
 import Review from "../models/review.model.js";
 import Business from "../models/business.model.js";
+import User from "../models/user.model.js";
 
 export const createReview = async (req, res, next) => {
   if (req.isBusinessOwner)
@@ -43,24 +44,27 @@ export const getReviews = async (req, res, next) => {
     next(err);
   }
 };
+
+
+//Delete Review
 export const deleteReview = async (req, res, next) => {
-    try {
-        const review = await Review.findById(req.params.id);
+  const review = await Review.findById(req.params.id);
+  
+//   console.log(req.isAuthenticated)
+//   if (!req.isAuthenticated) {
+//     return next(createError(401, "You must be logged in to delete a review"));
+// }
+
+        console.log("_=============_")
+        console.log(req.params.id)
         console.log(req.userId)
         console.log(review.userId)
         if (req.userId !== review.userId) {
             return next(createError(403, "You can delete only your own reviews!"));
         }
         await Review.findByIdAndDelete(req.params.id);
-        res.status(200).send("Profile Deleted.");
-        next(err);
-        
-    } catch (err) {
-        next(err)
-    }
-};
-// {
-//     "businessId":"64c2ea528623bafc247ebfe4",
-//     "star":5,
-//     "desc":"Testing 123"
-// }
+        res.status(200).send("Review Deleted.");
+        };
+
+
+//UPDATE OUR REVIEW

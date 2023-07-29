@@ -3,6 +3,7 @@ import createError from "../utils/createError.js";
 
 //create business
 export const createBusiness = async (req, res, next) => {
+  //check for duplicate
     console.log(req.isBusinessOwner)
     if (req.isBusinessOwner=="false")
     // console.log(req.params.isBusinessOwner)
